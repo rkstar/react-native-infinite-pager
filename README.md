@@ -1,3 +1,12 @@
+# THIS IS A FORK! ....
+## Please visit the original and install it instead.
+
+## install [react-native-infinite-pager](https://github.com/computerjazz/react-native-infinite-pager)
+
+
+------------------------------------
+
+
 # React Native Infinite Pager
 
 An infinitely-swipeable horizontal and vertical pager component.<br />
@@ -33,7 +42,7 @@ type Props = {
   renderPage?: PageComponentType
   pageCallbackNode?: Animated.SharedValue<number>;
   onPageChange?: (page: number) => void;
-  pageBuffer?: number; 
+  pageBuffer?: number;
   style?: AnyStyle;
   pageWrapperStyle?: AnyStyle;
   pageInterpolator?: typeof defaultPageInterpolator;
