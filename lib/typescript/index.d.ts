@@ -35,6 +35,7 @@ declare type Props = {
   pageCallbackNode?: Animated.SharedValue<number>;
   onPageChange?: (page: number) => void;
   pageBuffer?: number;
+  updatePagesInBuffer?: number;
   style?: AnyStyle;
   pageWrapperStyle?: AnyStyle;
   pageInterpolator?: typeof defaultPageInterpolator;
@@ -50,6 +51,7 @@ declare type ImperativeApiOptions = {
   animated?: boolean;
 };
 export declare type InfinitePagerImperativeApi = {
+  getCurrentPage: () => number;
   setPage: (index: number, options: ImperativeApiOptions) => void;
   incrementPage: (options: ImperativeApiOptions) => void;
   decrementPage: (options: ImperativeApiOptions) => void;
