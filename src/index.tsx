@@ -73,6 +73,7 @@ type Props = {
   pageCallbackNode?: Animated.SharedValue<number>;
   onPageChange?: (page: number) => void;
   pageBuffer?: number; // number of pages to render on either side of active page
+  updatePagesInBuffer?: number;
   style?: AnyStyle;
   pageWrapperStyle?: AnyStyle;
   pageInterpolator?: typeof defaultPageInterpolator;
@@ -90,6 +91,7 @@ type ImperativeApiOptions = {
 };
 
 export type InfinitePagerImperativeApi = {
+  getCurrentPage: () => number;
   setPage: (index: number, options: ImperativeApiOptions) => void;
   incrementPage: (options: ImperativeApiOptions) => void;
   decrementPage: (options: ImperativeApiOptions) => void;
@@ -102,6 +104,7 @@ function InfinitePager(
     pageCallbackNode,
     onPageChange,
     pageBuffer = 1,
+    updatePagesInBuffer,
     style,
     pageWrapperStyle,
     minIndex = -Infinity,
@@ -157,6 +160,7 @@ function InfinitePager(
   useImperativeHandle(
     ref,
     () => ({
+      getCurrentPage: () => curIndexRef.current,
       setPage,
       incrementPage: (options?: ImperativeApiOptions) => {
         setPage(curIndexRef.current + 1, options);
@@ -252,7 +256,11 @@ function InfinitePager(
               pageWidth={pageWidth}
               pageHeight={pageHeight}
               isActive={pageIndex === curIndex}
-              isAdjacentToActive={Math.abs(pageIndex - curIndex) === 1}
+              isAdjacentToActive={
+                updatePagesInBuffer
+                  ? Math.abs(pageIndex - curIndex) <= updatePagesInBuffer
+                  : false
+              }
               PageComponent={PageComponent}
               renderPage={renderPage}
               style={pageWrapperStyle}
