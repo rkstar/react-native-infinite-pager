@@ -3,6 +3,7 @@ import React, {
   useImperativeHandle,
   useCallback,
   useRef,
+  Suspense,
 } from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import Animated, {
@@ -66,6 +67,11 @@ type AnyStyle = StyleProp<ViewStyle> | ReturnType<typeof useAnimatedStyle>;
 
 type Props = {
   vertical?: boolean;
+  LoadingComponent:
+    | React.ComponentType<any>
+    | React.ReactElement
+    | null
+    | undefined;
   PageComponent?:
     | PageComponentType
     | React.MemoExoticComponent<PageComponentType>;
@@ -98,6 +104,7 @@ export type InfinitePagerImperativeApi = {
 function InfinitePager(
   {
     vertical = false,
+    LoadingComponent,
     PageComponent,
     pageCallbackNode,
     onPageChange,
@@ -232,37 +239,39 @@ function InfinitePager(
     .enabled(!gesturesDisabled);
 
   return (
-    <GestureDetector
-      gesture={Gesture.Simultaneous(panGesture, ...simultaneousGestures)}
-    >
-      <Animated.View
-        style={style}
-        onLayout={({ nativeEvent: { layout } }) => {
-          pageWidth.value = layout.width;
-          pageHeight.value = layout.height;
-        }}
+    <Suspense fallback={LoadingComponent ?? null}>
+      <GestureDetector
+        gesture={Gesture.Simultaneous(panGesture, ...simultaneousGestures)}
       >
-        {pageIndices.map((pageIndex) => {
-          return (
-            <PageWrapper
-              key={`page-provider-wrapper-${pageIndex}`}
-              vertical={vertical}
-              pageAnim={pageAnim}
-              index={pageIndex}
-              pageWidth={pageWidth}
-              pageHeight={pageHeight}
-              isActive={pageIndex === curIndex}
-              isAdjacentToActive={Math.abs(pageIndex - curIndex) === 1}
-              PageComponent={PageComponent}
-              renderPage={renderPage}
-              style={pageWrapperStyle}
-              pageInterpolatorRef={pageInterpolatorRef}
-              pageBuffer={pageBuffer}
-            />
-          );
-        })}
-      </Animated.View>
-    </GestureDetector>
+        <Animated.View
+          style={style}
+          onLayout={({ nativeEvent: { layout } }) => {
+            pageWidth.value = layout.width;
+            pageHeight.value = layout.height;
+          }}
+        >
+          {pageIndices.map((pageIndex) => {
+            return (
+              <PageWrapper
+                key={`page-provider-wrapper-${pageIndex}`}
+                vertical={vertical}
+                pageAnim={pageAnim}
+                index={pageIndex}
+                pageWidth={pageWidth}
+                pageHeight={pageHeight}
+                isActive={pageIndex === curIndex}
+                isAdjacentToActive={Math.abs(pageIndex - curIndex) === 1}
+                PageComponent={PageComponent}
+                renderPage={renderPage}
+                style={pageWrapperStyle}
+                pageInterpolatorRef={pageInterpolatorRef}
+                pageBuffer={pageBuffer}
+              />
+            );
+          })}
+        </Animated.View>
+      </GestureDetector>
+    </Suspense>
   );
 }
 
