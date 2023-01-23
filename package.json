@@ -62,5 +62,12 @@
       "module",
       "typescript"
     ]
+  },
+  "bugs": {
+    "url": "https://github.com/computerjazz/react-native-infinite-pager/issues"
+  },
+  "homepage": "https://github.com/computerjazz/react-native-infinite-pager#readme",
+  "directories": {
+    "lib": "lib"
   }
 }
