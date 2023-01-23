@@ -1,6 +1,6 @@
 {
-  "name": "react-native-infinite-pager",
-  "version": "0.2.0",
+  "name": "@rkstar/react-native-infinite-pager",
+  "version": "0.2.1",
   "description": "A pager component that renders pages dynamically. Powered by reanimated.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -11,7 +11,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "typecheck": "tsc --skipLibCheck --noEmit",
-    "build": "bob build",
+    "build": "npx bob build",
     "lint": "eslint --ext .ts,.js,.tsx ."
   },
   "husky": {
@@ -37,6 +37,7 @@
     "react-native-reanimated": ">=2.8.0"
   },
   "devDependencies": {
+    "@bconnorwhite/bob": "^2.9.5",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/react": "^17.0.5",
     "@types/react-native": "^0.64.5",
@@ -61,5 +62,12 @@
       "module",
       "typescript"
     ]
+  },
+  "bugs": {
+    "url": "https://github.com/computerjazz/react-native-infinite-pager/issues"
+  },
+  "homepage": "https://github.com/computerjazz/react-native-infinite-pager#readme",
+  "directories": {
+    "lib": "lib"
   }
 }
