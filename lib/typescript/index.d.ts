@@ -28,11 +28,6 @@ declare type AnyStyle =
   | ReturnType<typeof useAnimatedStyle>;
 declare type Props = {
   vertical?: boolean;
-  LoadingComponent:
-    | React.ComponentType<any>
-    | React.ReactElement
-    | null
-    | undefined;
   PageComponent?:
     | PageComponentType
     | React.MemoExoticComponent<PageComponentType>;
